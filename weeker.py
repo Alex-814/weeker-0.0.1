@@ -62,6 +62,7 @@ def cr_table():
         print(f"Ошибка создания таблицы {e}")
 
 def save_date(user_id, date_str):
+    user_id = str(user_id)
     connectdb = connect_db()
     if connectdb is None:
         return False
@@ -81,6 +82,7 @@ def save_date(user_id, date_str):
         return False
 
 def load_date(user_id):
+    user_id = str(user_id)
     connectdb = connect_db()
     if connectdb is None:
         return None
