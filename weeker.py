@@ -119,8 +119,8 @@ def save_timezone(user_id, offset):
         cur.execute("""
                 INSERT INTO user_dates (user_id, date_str, timezone_offset)
                 VALUES (%s, '', %s)
-                ON CONFLICT (user_id) DO UPDATE SET timezone_offset = EXCLUDED.timezone_offest;        
-            """, (user_id, offest))
+                ON CONFLICT (user_id) DO UPDATE SET timezone_offset = EXCLUDED.timezone_offset;        
+            """, (user_id, offset))
         connectdb.commit()
         cur.close()
         connectdb.close()
