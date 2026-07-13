@@ -278,6 +278,20 @@ def serch_date(message):
     else:
         bot.send_message(uid, "Дата не найдена.")
 
+@bot.message_handler(commands = ['chek'])
+def chek_date(message):
+    uid = str(message.chat.id)
+    date = load_date(uid)
+    if not data:
+        bot.send_message(uid, "Установите дату.")
+        return
+    weeks = get_week(date)
+    if weeks is None:
+         bot.send_message(uid, "Установите новую дату.")
+        return
+    else:
+        bot.send_message(uid, f"прошло {weeks}")
+
 
 
 cr_table()
