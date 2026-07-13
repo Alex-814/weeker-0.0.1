@@ -51,7 +51,7 @@ def cr_table():
             CREATE TABLE IF NOT EXISTS user_dates (
             user_id TEXT PRIMARY KEY,
             date_str TEXT NOT NULL,
-            timezone_offest INTEGER DEFAULT 0,
+            timezone_offset INTEGER DEFAULT 0,
             created_at TIMESTAMP DEFAULT NOW()
             );           
         """)
@@ -68,8 +68,8 @@ def save_date(user_id, date_str):
     try:
         cur = connectdb.cursor()
         cur.execute("""
-            INSERT INTO user_dates (user_id, date_str, timezone_offest)
-            VALUES (%s, %s, COALESCE((SELECT timezone_offest FROM user_dates WHERE user_id = %s), 0))
+            INSERT INTO user_dates (user_id, date_str, timezone_offset)
+            VALUES (%s, %s, COALESCE((SELECT timezone_offset FROM user_dates WHERE user_id = %s), 0))
             ON CONFLICT (user_id) DO UPDATE SET date_str = EXCLUDED.date_str;        
         """, (user_id, date_str, user_id))
         connectdb.commit()
@@ -101,7 +101,7 @@ def load_timezone(user_id):
         return 0
     try:
         cur = connectdb.cursor()
-        cur.execute("SELECT timezone_offest FROM user_dates WHERE user_id = %s;", (user_id,))
+        cur.execute("SELECT timezone_offset FROM user_dates WHERE user_id = %s;", (user_id,))
         res = cur.fetchone()
         cur.close()
         connectdb.close()
@@ -110,16 +110,16 @@ def load_timezone(user_id):
         print(f"Ошибка загрузки часового пояса {e}")
         return 0
 
-def save_timezone(user_id, offest):
+def save_timezone(user_id, offset):
     connectdb = connect_db()
     if connectdb is None:
         return False
     try:
         cur = connectdb.cursor()
         cur.execute("""
-                INSERT INTO user_dates (user_id, date_str, timezone_offest)
+                INSERT INTO user_dates (user_id, date_str, timezone_offset)
                 VALUES (%s, '', %s)
-                ON CONFLICT (user_id) DO UPDATE SET timezone_offest = EXCLUDED.timezone_offest;        
+                ON CONFLICT (user_id) DO UPDATE SET timezone_offset = EXCLUDED.timezone_offest;        
             """, (user_id, offest))
         connectdb.commit()
         cur.close()
@@ -135,7 +135,7 @@ def get_users():
         return {}
     try:
         cur = connectdb.cursor()
-        cur.execute("SELECT user_id, date_str, timezone_offest FROM user_dates;")
+        cur.execute("SELECT user_id, date_str, timezone_offset FROM user_dates;")
         res = cur.fetchall()
         cur.close()
         connectdb.close()
