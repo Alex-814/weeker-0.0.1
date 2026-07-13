@@ -264,6 +264,20 @@ def del_date(message):
     else:
         bot.send_message(uid, "Ошибка удаления даты.")
 
+@bot.message_handler(commands = ['chek'])
+def chek_date(message):
+    uid = str(message.chat.id)
+    date = load_date(uid)
+    if not date:
+        bot.send_message(uid, "Установите дату.")
+        return
+    weeks = get_week(date)
+    if weeks is None:
+         bot.send_message(uid, "Установите новую дату.")
+         return
+    else:
+        bot.send_message(uid, f"прошло {weeks}")
+
 @bot.message_handler(func = lambda m: True)
 def serch_date(message):
     uid = str(message.chat.id)
@@ -280,19 +294,7 @@ def serch_date(message):
     else:
         bot.send_message(uid, "Дата не найдена.")
 
-@bot.message_handler(commands = ['chek'])
-def chek_date(message):
-    uid = str(message.chat.id)
-    date = load_date(uid)
-    if not date:
-        bot.send_message(uid, "Установите дату.")
-        return
-    weeks = get_week(date)
-    if weeks is None:
-         bot.send_message(uid, "Установите новую дату.")
-         return
-    else:
-        bot.send_message(uid, f"прошло {weeks}")
+
 
 
 
