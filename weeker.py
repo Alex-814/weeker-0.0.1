@@ -284,7 +284,7 @@ def serch_date(message):
 def chek_date(message):
     uid = str(message.chat.id)
     date = load_date(uid)
-    if not data:
+    if not date:
         bot.send_message(uid, "Установите дату.")
         return
     weeks = get_week(date)
