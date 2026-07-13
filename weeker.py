@@ -21,6 +21,17 @@ MESSAGES = [
 
 def connect_db():
     try:
+        conn_p = {
+            "sslmode": "reqire",
+            "connect_timeout": 30,
+            "keepalives_idle": 5,
+            "keepalives_interval": 2,
+            "keepalives_count": 2
+        }
+        o_f = socket.getaddrinfo
+        socket.getaddrinfo = lambda host, port, family = 0, type = 0, proto = 0, flags = 0: o_f(
+            host, port, socket.AF_NET, type, proto, flags
+        )
         connectdb = psycopg2.connect(DATA_BASE)
         return connectdb
     except Exception as e:
