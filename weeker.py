@@ -251,6 +251,7 @@ def get_time(message):
             return
         if save_timezone(uid, utc_int):
             bot.send_message(uid, "Часовой пояс установлен.")
+            bot.send_message(uid, "Авторизация прошла успешно. Ожидайте воскресенья.")
         else:
             bot.send_message(uid, "Ошибка сохранения.")
     except:
