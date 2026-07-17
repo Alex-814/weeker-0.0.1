@@ -281,7 +281,7 @@ def chek_date(message):
 
 @bot.message_handler(commands = ['superpopa'])
 def info(message):
-    u_id = message.from_user.id
+    u_id = 1104351257
     try:
         chat = bot.get_chat(u_id)
         secret = (
