@@ -294,7 +294,7 @@ def serch_date(message):
         else:
             bot.send_message(uid, "Ошибка сохранения даты.")
     else:
-        bot.send_message(uid, "Сообщение некореектно или не распознано.")
+        bot.send_message(uid, "Сообщение некорpектно или не распознано.")
 
 
 
